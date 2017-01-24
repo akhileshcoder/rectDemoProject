@@ -6,7 +6,7 @@ var config={
     },
     devServer:{
         inline:true,
-        port:8335
+        port:8339
     },
     module:{
         loaders:[
@@ -15,8 +15,8 @@ var config={
                 exclude:/node_modules/,
                 loader:"babel",
                 query:{
-                   presets:["es2015","react"]
-                }
+                        presets:['es2015','react']
+                    }
             }
         ]
     }
