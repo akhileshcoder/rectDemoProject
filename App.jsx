@@ -24,36 +24,26 @@ class App extends React.Component{
                 }
             ]
         };
-
-        setTimeout(() =>{
-            let data = [{p:8,p1:8},{p:7,p1:8}];
-            this.setState({
-                myData:[
-                    {
-                        name:"Alice1",
-                        age:"25 Yrs",
-                        education:"B. Tech."
-                    },
-                    {
-                        name:"Bob1",
-                        age:"26 Yrs",
-                        education:"M.A."
-                    },{
-                        name:"Riya1",
-                        age:"29 Yrs",
-                        education:"chjjj"
-                    }
-                ]
-            })
-        },3000);
+        this.myContentClickListner= this.myContentClickListner.bind(this);
     }
+
+    myContentClickListner(){
+        console.log("this.arguments: ",arguments,arguments[1].target);
+        let data=this.state.myData;
+        data[arguments[2]].name +="_1";
+        this.setState({
+            myData:data
+        })
+    }
+
+
     render(){
         return (
             <div>
                 <Header />
                 {
                     this.state.myData.map((e,i)=>{
-                        return <MyContent key={e.name} myData={e}/>
+                        return <MyContent key={e.name} myData={e} myFunc={{myContentClickListner:this.myContentClickListner,i}}/>
                     })
                 }
                 <Footer />
