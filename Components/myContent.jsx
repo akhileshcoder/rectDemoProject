@@ -7,12 +7,14 @@ class MyContent extends React.Component{
     render(){
         let myStyle={padding:"5px", borderBottom:"1px solid",marginBottom:"15px"};
         return (
-            <p onClick={(evnt)=>{this.props.myFunc.myContentClickListner(this,evnt,this.props.myFunc.i)}}>
-                Data from parent<br/>
-                name:{this.props.myData.name},<br/>
-                age:{this.props.myData.age},<br/>
-                education:{this.props.myData.education}
-            </p>
+            <div style={{border:"1px solid",width:"300px",padding:"5px",margin:"15px"}}>
+                <h4>Data from parent</h4>
+                {
+                    Object.keys(this.props.myData).map(e=>{
+                        return <div key={e+":"+this.props.myData[e]}><b>{e}:</b>{this.props.myData[e]},</div>
+                    })
+                }
+            </div>
         )
     }
 }
