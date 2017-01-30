@@ -3,79 +3,56 @@ import Header from "./Components/header.jsx";
 import Footer from "./Components/footer.jsx";
 import MyContent from "./Components/myContent.jsx";
 import MyRouteNav from "./Components/myRouteNav.jsx";
-import CustFilter from "./Components/custFilter.jsx";
+import CustFilterGroup from "./Components/filter/custFilterGroup.jsx";
+import myJsn from "./myStateData.js";
 
 class App extends React.Component{
     constructor(){
         super();
-        this.state ={
-            myData:[
-                {
-                    name:"Alice",
-                    age:25,
-                    education:"B. Tech.",
-                    location:"Delhi"
-                },
-                {
-                    name:"Bob",
-                    age:26,
-                    education:"M.A.",
-                    location:"Bangalore"
-                },
-                {
-                    name:"Riya",
-                    age:29,
-                    education:"M. Sc.",
-                    location:"pune"
-                },
-                {
-                    name:"Abhishek",
-                    age:25,
-                    education:"B. Tech.",
-                    location:"Delhi"
-                },
-                {
-                    name:"Akhilesh",
-                    age:26,
-                    education:"M.A.",
-                    location:"Bangalore"
-                },
-                {
-                    name:"Neha",
-                    age:29,
-                    education:"M. Sc.",
-                    location:"pune"
-                }
-            ],
-            myFiltr:{}
-        };
+        this.state =myJsn;
         this.state.myDataCopy=JSON.parse(JSON.stringify(this.state.myData));
         this.myDropDownListner= this.myDropDownListner.bind(this);
-        this.resetAllData= this.resetAllData.bind(this);
-        this.resetAllData();
+        this.resetAllFilter= this.resetAllFilter.bind(this);
+        this.updateFiltr= this.updateFiltr.bind(this);
+        this.state.myFiltr=this.resetAllFilter();
     }
-    resetAllData(){
-        this.state.myFiltr={};
+    updateFiltr(typ,val){
+        console.log("typ,val: ",typ,val);
+        let data;
+        if(typ){
+            data = this.state.myData.filter(e=>{
+                return e[typ]==val;
+            });
+        }else{
+            data=JSON.parse(JSON.stringify(this.state.myDataCopy));
+        }
+        this.setState({
+           myData:data
+        });
+        setTimeout(()=> {
+            let currFltr=this.resetAllFilter();
+            console.log("currFltr:",currFltr,this.state);
+            this.setState({
+                myFiltr:currFltr
+            });
+        },0)
+
+    }
+    resetAllFilter(){
+        let myFiltr={};
         this.state.myData.forEach(e=>{
             Object.keys(e).forEach(itm=>{
-                if(this.state.myFiltr[itm]){
-                    this.state.myFiltr[itm].push(e[itm])
+                if(myFiltr[itm] && myFiltr[itm].indexOf(e[itm])==-1){
+                    myFiltr[itm].push(e[itm])
                 }else {
-                    this.state.myFiltr[itm]=[e[itm]];
+                    myFiltr[itm]=[e[itm]];
                 }
-            })
+            });
         });
-        this.setState({
-            myData:JSON.parse(JSON.stringify(this.state.myDataCopy))
-        })
+        return myFiltr;
     }
-    myDropDownListner(){
-        //console.log("this.arguments: ",arguments,arguments[1].target.innerText);
-        let data=this.state.myData;
-        data[arguments[2]][arguments[1].target.innerText] +="_1";
-        this.setState({
-            myData:data
-        })
+    myDropDownListner(vl,typ){
+        this.updateFiltr(typ,vl)
     }
 
 
@@ -83,17 +60,11 @@ class App extends React.Component{
         return (
             <div>
                 <Header />
-                {
-                    Object.keys(this.state.myFiltr).map((e,i)=>{
-                        return <CustFilter key={e+":"+i}
-                                           myprop={{key:this.state.myFiltr[e],name:e}}
-                                           myFunc={{myDropDownListner:this.myDropDownListner,i}}
-                        />
-                    })
-                }
-                <button className="btn btn-default"
-                        style={{margin:"10px"}}
-                        onClick={()=>{this.resetAllData}}>Reset All</button>
+                <CustFilterGroup
+                    filter_data={this.state.myFiltr}
+                    filter_handler={this.myDropDownListner}
+                    filter_reseter={this.updateFiltr} />
+
                 <div className="clearfix"></div>
                 {
                     this.state.myData.map((e,i)=>{
