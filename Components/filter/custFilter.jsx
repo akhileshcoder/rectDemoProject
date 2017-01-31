@@ -14,7 +14,7 @@ class CustFilter extends React.Component{
                         {this.props.myprop.key.map((e,i)=>{
                             return <li
                                 key={e+":"+i +"dropdownMenu"+this.props.myprop.name}
-                                onClick={(evnt)=>{this.props.myFunc.myDropDownListner(evnt.target.innerText,this.props.myprop.name)}}
+                                onClick={(evnt)=>{this.props.myFunc(this.props.myprop.name,evnt.target.innerText)}}
                             ><a href="#">{e}</a></li>
                         })}
                     </ul>

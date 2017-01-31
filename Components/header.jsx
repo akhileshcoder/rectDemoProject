@@ -7,9 +7,7 @@ class Header extends React.Component{
             <div>
                 <div style={myStyle}>
                     <span>I m logo</span>
-                    <button className="pull-right">Change Data</button>
                     <span className="pull-right">I m magic button</span>
-
                 </div>
             </div>
         )

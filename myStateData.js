@@ -19,13 +19,13 @@ let myDta={
             "location":"pune"
         },
         {
-            "name":"Abhishek",
+            "name":"Sabiha",
             "age":25,
             "education":"B. Tech.",
             "location":"Delhi"
         },
         {
-            "name":"Akhilesh",
+            "name":"Arun",
             "age":26,
             "education":"M.A.",
             "location":"Bangalore"

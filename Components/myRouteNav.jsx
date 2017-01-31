@@ -5,14 +5,19 @@ class MyRouteNav extends React.Component{
         let myStyle={padding:"5px", borderBottom:"1px solid",marginBottom:"15px"};
         return (
             <div>
-                <ul className="nav nav-tabs nav-justified">
-                    <li role="presentation" className="active"><a href="#">Page1</a></li>
-                    <li role="presentation"><a href="#">Page2</a></li>
-                    <li role="presentation"><a href="#">Page3</a></li>
+                <ul className="nav nav-tabs">
+                    {
+                        this.props.pageData.page.map((e,i)=>{
+                            return <li key={e} role="presentation"
+                                       className={i==0?"active":""}
+                                       style={{marginLeft:i==0?"20px":""}}>
+                                <a href="#">{e}</a>
+                            </li>
+                        })
+                    }
                 </ul>
             </div>
         )
     }
 }
-
 export default MyRouteNav;

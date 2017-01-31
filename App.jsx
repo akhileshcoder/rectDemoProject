@@ -9,12 +9,8 @@ import myJsn from "./myStateData.js";
 class App extends React.Component{
     constructor(){
         super();
-        this.state =myJsn;
-        this.state.myDataCopy=JSON.parse(JSON.stringify(this.state.myData));
-        this.myDropDownListner= this.myDropDownListner.bind(this);
         this.resetAllFilter= this.resetAllFilter.bind(this);
         this.updateFiltr= this.updateFiltr.bind(this);
-        this.state.myFiltr=this.resetAllFilter();
     }
     updateFiltr(typ,val){
         console.log("typ,val: ",typ,val);
@@ -51,23 +47,26 @@ class App extends React.Component{
         });
         return myFiltr;
     }
-    myDropDownListner(vl,typ){
-        this.updateFiltr(typ,vl)
-    }
 
+    componentWillMount(){
+        this.state =myJsn;
+        this.state.myDataCopy=JSON.parse(JSON.stringify(this.state.myData));
+        this.state.myFiltr=this.resetAllFilter();
+    }
 
     render(){
         return (
             <div>
-                <Header />
+               {/* <Header />
+                <MyRouteNav
+                    pageData={{page:["Home","About","Dashboard"]}} />*/}
+
                 <CustFilterGroup
                     filter_data={this.state.myFiltr}
-                    filter_handler={this.myDropDownListner}
+                    filter_handler={this.updateFiltr}
                     filter_reseter={this.updateFiltr} />
-
-                <div className="clearfix"></div>
                 {
-                    this.state.myData.map((e,i)=>{
+                    this.state.myData.map(e=>{
                         return <MyContent key={e.name} myData={e} />
                     })
                 }

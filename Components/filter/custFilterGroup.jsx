@@ -10,7 +10,7 @@ class CustFilterGroup extends React.Component{
                     Object.keys(this.props.filter_data).map((e,i)=>{
                         return <CustFilter key={e+":"+i}
                                            myprop={{name:e,key:this.props.filter_data[e]}}
-                                           myFunc={{myDropDownListner:this.props.filter_handler,i}}
+                                           myFunc={this.props.filter_handler}
                         />
                     })
                 }
